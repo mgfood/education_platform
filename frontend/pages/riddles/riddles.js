@@ -32,35 +32,34 @@ function checkAnswer() {
     if (userAnswer.includes(correctAnswer) || correctAnswer.includes(userAnswer)) {
         resultText.textContent = 'Правильно!';
         resultContainer.classList.add('alert', 'alert-success')
-        
+       
     } else {
         resultText.textContent = `Неправильно, правильный ответ ${currentRiddle.answer}`;
         resultContainer.classList.add('alert', 'alert-danger')
     }
-    
     resultContainer.style.display = 'block';
 }
 
 function fetchNewRiddle() {
-    fetch('http://127.0.0.1:5000/api/get_riddle', {
+    fetch('https://mgfood.pythonanywhere.com/api/get_riddle', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
     })
     .then(response => {
-        if (!response.ok) {
-             throw new Error( `HTTP error! status: ${response.status}`);
-        }
-       return response.json()
-    })
-   .then(data => {
-        riddles.push(data);
-        displayRiddle();
+            if (!response.ok) {
+                  throw new Error( `HTTP error! status: ${response.status}`);
+             }
+           return response.json()
+       })
+    .then(data => {
+         riddles.push(data);
+         displayRiddle();
      })
     .catch(error => {
       console.error('Ошибка получения загадки:', error);
-    });
+  });
 }
 
 
@@ -69,13 +68,8 @@ checkButton.addEventListener('click', () => {
 });
 
 nextButton.addEventListener('click', () => {
-     if (currentRiddleIndex === riddles.length -1){
-         fetchNewRiddle()
-     }
-      else{
-         currentRiddleIndex++;
-          displayRiddle();
-        }
+    currentRiddleIndex++;
+      displayRiddle();
 });
 
 fetchNewRiddle();

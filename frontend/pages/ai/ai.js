@@ -56,7 +56,7 @@ chatInput.addEventListener('keydown', (event) => {
 });
 
 function sendRequestToBackend(message) {
-  fetch('http://127.0.0.1:5000/api/ai_chat', {
+  fetch('https://mgfood.pythonanywhere.com/api/ai_chat', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -72,8 +72,8 @@ function sendRequestToBackend(message) {
      .then((data) => {
         addMessage(data.response, false);
         })
-        .catch(error => {
-           console.error("Fetch error:", error);
+         .catch(error => {
+            console.error("Fetch error:", error);
               if (error.message === 'Failed to fetch'){
                 addMessage('Проблема с сетью. Попробуйте позже.', false, true, message);
               } else if(error.message.startsWith('HTTP error')){
